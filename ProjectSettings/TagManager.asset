@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Planet
   - Orbit
+  - HealthSlider
   layers:
   - Default
   - TransparentFX

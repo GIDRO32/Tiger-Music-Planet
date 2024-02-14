@@ -5,19 +5,21 @@ using System.Linq;
 
 public class LevelMode : MonoBehaviour
 {
+    public GameObject PlayButton;
     public GameObject[] planets;
     private Vector3[] startPositions;
     public List<Collider2D> orbitColliders; // List of orbit colliders
     private GameObject draggedPlanet = null;
     private Vector3 offset;
     private Dictionary<GameObject, List<GameObject>> orbitToPlanetsMap = new Dictionary<GameObject, List<GameObject>>();
-    [SerializeField] List<List<AudioClip>> MusicPatterns = new List<List<AudioClip>>(); // List of lists to hold music patterns for each orbit
+    // [SerializeField] private List<GameObjectGroup> sequenceOfGroups = new List<GameObjectGroup>();
+    [SerializeField] private List<List<AudioClip>> MusicPatterns = new List<List<AudioClip>>(); // List of lists to hold music patterns for each orbit
     [SerializeField] private List<OrbitAudioPair> orbitAudioPairs = new List<OrbitAudioPair>();
     private Dictionary<GameObject, List<AudioClip>> orbitSoundOrder = new Dictionary<GameObject, List<AudioClip>>();
-    private List<AudioClip> playedSounds = new List<AudioClip>();
     void Start()
     {
-startPositions = new Vector3[planets.Length];
+        PlayButton.SetActive(true);
+        startPositions = new Vector3[planets.Length];
         for (int i = 0; i < planets.Length; i++)
         {
             startPositions[i] = planets[i].transform.position;
@@ -55,44 +57,51 @@ void ConstructMusicPattern()
             MusicPatterns.Add(orbitClips);
         }
     }
-    IEnumerator PlaySoundsFromPattern()
-    {
-        foreach (var orbitClips in MusicPatterns)
-        {
-            foreach (var clip in orbitClips)
-            {
-                AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-                audioSource.clip = clip;
-                audioSource.Play();
-                Destroy(audioSource, clip.length); // Destroy the AudioSource once the clip has finished playing
-                playedSounds.Add(clip);
-                Debug.Log($"Playing AudioClip: {clip.name}");
-            }
-            yield return new WaitForSeconds(0.5f); // Wait for 0.5 seconds between each orbit's clips
-        }
-        MusicPatterns.Clear(); 
-    }
-    public void PlayAllSoundsSequentially()
-    {
-        ConstructMusicPattern();
-        StartCoroutine(PlaySoundsFromPattern());
-    }
-public void CheckWinCondition()
+
+
+
+IEnumerator PlaySoundsFromPattern()
 {
-    // Initialize a list to hold the correct sequence of sounds for all orbits
-    List<AudioClip> correctSequence = new List<AudioClip>();
+    bool isCorrectOrder = true; // Assume true until proven otherwise
 
-    // Populate the correctSequence list based on the defined order in orbitSoundOrder
-    foreach (var orbitCollider in orbitColliders)
+    // Temporary list to store the sequence of played sounds for comparison
+    List<AudioClip> playedSounds = new List<AudioClip>();
+
+    foreach (var orbitClips in MusicPatterns)
     {
-        if (orbitSoundOrder.TryGetValue(orbitCollider.gameObject, out List<AudioClip> orbitSounds))
+        foreach (var clip in orbitClips)
         {
-            correctSequence.AddRange(orbitSounds);
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.clip = clip;
+            audioSource.Play();
+            playedSounds.Add(clip); // Add the clip to the playedSounds list for later comparison
+            Destroy(audioSource, clip.length);
+            Debug.Log($"Playing AudioClip: {clip.name}");
+        }
+        yield return new WaitForSeconds(0.5f);
+    }
+List<AudioClip> correctOrderSounds = orbitSoundOrder.SelectMany(pair => pair.Value).ToList();
+if (playedSounds.Count == correctOrderSounds.Count)
+{
+    for (int i = 0; i < playedSounds.Count; i++)
+    {
+        if (playedSounds[i] != correctOrderSounds[i])
+        {
+            isCorrectOrder = false;
+            break;
         }
     }
+}
+else
+{
+    isCorrectOrder = false;
+}
 
-    // Now compare the playedSounds with the correctSequence
-    if (playedSounds.SequenceEqual(correctSequence))
+    // Clearing MusicPatterns after playing
+    MusicPatterns.Clear();
+
+    // Check if the order matches after all sounds have been played
+    if (isCorrectOrder)
     {
         Debug.Log("WIN!");
     }
@@ -100,9 +109,31 @@ public void CheckWinCondition()
     {
         Debug.Log("Try again...");
     }
+}
+    public void PlayAllSoundsSequentially()
+    {
+        ConstructMusicPattern();
+        StartCoroutine(PlaySoundsFromPattern());
+    }
+public void ShowPattern()
+{
+    StartCoroutine(PlaySoundsFromOrbitAudioPairs());
+}
 
-    // Clear playedSounds for the next attempt
-    playedSounds.Clear();
+IEnumerator PlaySoundsFromOrbitAudioPairs()
+{
+    foreach (OrbitAudioPair pair in orbitAudioPairs)
+    {
+        foreach (AudioClip clip in pair.audioClips)
+        {
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.clip = clip;
+            audioSource.Play();
+            Debug.Log($"Playing correct AudioClip: {clip.name} for orbit: {pair.orbit.name}");
+            yield return new WaitForSeconds(clip.length + 0.5f); // Wait for the clip to finish plus a delay
+            Destroy(audioSource); // Clean up the AudioSource once the clip has finished
+        }
+    }
 }
 
     void Update()
@@ -171,6 +202,12 @@ public class OrbitAudioPair
 {
     public GameObject orbit;
     public List<AudioClip> audioClips;
+}
+
+[System.Serializable]
+public class GameObjectGroup
+{
+    public List<GameObject> groupItems = new List<GameObject>();
 }
 
 public class RotateAroundTarget : MonoBehaviour
