@@ -1,13 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 public class LevelMode : MonoBehaviour
 {
+    
+    public GameObject Interface;
     public GameObject PlayButton;
+    public GameObject StartPanel;
+    public GameObject CompletePanel;
     public GameObject[] planets;
     private Vector3[] startPositions;
+    public GameObject[] buttonIndicators;
     public List<Collider2D> orbitColliders; // List of orbit colliders
     private GameObject draggedPlanet = null;
     private Vector3 offset;
@@ -16,13 +22,30 @@ public class LevelMode : MonoBehaviour
     [SerializeField] private List<List<AudioClip>> MusicPatterns = new List<List<AudioClip>>(); // List of lists to hold music patterns for each orbit
     [SerializeField] private List<OrbitAudioPair> orbitAudioPairs = new List<OrbitAudioPair>();
     private Dictionary<GameObject, List<AudioClip>> orbitSoundOrder = new Dictionary<GameObject, List<AudioClip>>();
+    public float levelTimer = 60.0f; // Total time for the level in seconds
+    public Slider timerSlider; // Assign in the inspector
+    public GameObject gameOverPanel; // Assign in the inspector
+    private bool extraTimeUsed = false; // To check if the extra time button has been used
+    public Button extraTimeButton; // Assign in the inspector
+    public Text timerCounter;
+
     void Start()
     {
+        timerSlider.maxValue = levelTimer; 
+        timerSlider.value = levelTimer;
+        Interface.SetActive(false);
+        CompletePanel.SetActive(false);
+        StartPanel.SetActive(true);
         PlayButton.SetActive(true);
+        gameOverPanel.SetActive(false);
         startPositions = new Vector3[planets.Length];
         for (int i = 0; i < planets.Length; i++)
         {
             startPositions[i] = planets[i].transform.position;
+        }
+        for(int j = 0; j < buttonIndicators.Length; j++)
+        {
+            buttonIndicators[j].SetActive(false);
         }
         
         foreach (var orbitCollider in orbitColliders)
@@ -104,6 +127,8 @@ else
     if (isCorrectOrder)
     {
         Debug.Log("WIN!");
+        CompletePanel.SetActive(true);
+        Time.timeScale = 0f;
     }
     else
     {
@@ -119,27 +144,59 @@ public void ShowPattern()
 {
     StartCoroutine(PlaySoundsFromOrbitAudioPairs());
 }
-
+public void StartLevel()
+{
+    StartPanel.SetActive(false);
+    Interface.SetActive(true);
+}
 IEnumerator PlaySoundsFromOrbitAudioPairs()
 {
+    List<AudioClip> playedSounds = new List<AudioClip>();
+    int indicatorIndex = 0;
+
     foreach (OrbitAudioPair pair in orbitAudioPairs)
     {
         foreach (AudioClip clip in pair.audioClips)
         {
+            if (indicatorIndex < buttonIndicators.Length)
+            {
+                // Activate the corresponding button indicator
+                buttonIndicators[indicatorIndex].SetActive(true);
+                indicatorIndex++; // Move to the next indicator for the next iteration
+            }
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.clip = clip;
             audioSource.Play();
-            Debug.Log($"Playing correct AudioClip: {clip.name} for orbit: {pair.orbit.name}");
-            yield return new WaitForSeconds(clip.length + 0.5f); // Wait for the clip to finish plus a delay
-            Destroy(audioSource); // Clean up the AudioSource once the clip has finished
+            playedSounds.Add(clip); // Add the clip to the playedSounds list for later comparison
+            Destroy(audioSource, clip.length);
+            Debug.Log($"Playing AudioClip: {clip.name}");
+        }
+        yield return new WaitForSeconds(0.5f);
+        buttonIndicators[indicatorIndex - 1].SetActive(false);
+    }
+    foreach (var indicator in buttonIndicators)
+    {
+         indicator.SetActive(false);
+    }
+}
+public void DestroyAllPlanetsOnOrbits()
+{
+    foreach (var planet in FindObjectsOfType<PlanetController>())
+    {
+        // Check if the planet is within any orbit collider
+        if (orbitColliders.Any(orbitCollider => orbitCollider.OverlapPoint(planet.transform.position)))
+        {
+            Destroy(planet.gameObject);
         }
     }
 }
+
 
     void Update()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        timerCounter.text = levelTimer.ToString("F1");
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -193,6 +250,28 @@ IEnumerator PlaySoundsFromOrbitAudioPairs()
 
                 draggedPlanet = null;
             }
+        }
+        if (levelTimer > 0)
+        {
+            levelTimer -= Time.deltaTime;
+            timerSlider.value = levelTimer;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            // Time's up - show the Game Over panel
+            gameOverPanel.SetActive(true);
+            // Optional: Disable the extra time button to prevent it from being used after the game is over
+            extraTimeButton.interactable = false;
+        }
+    }
+    public void AddExtraTime()
+    {
+        if (!extraTimeUsed)
+        {
+            levelTimer += 30.0f; // Add 30 seconds to the timer
+            extraTimeUsed = true; // Prevent further use of the button in this level
+            extraTimeButton.interactable = false; // Disable the button
         }
     }
 }

@@ -13,10 +13,7 @@ public class PanelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0f;
-        Interface.SetActive(false);
-        Panels[0].SetActive(true);
-        for(int i = 1; i < Panels.Length; i++)
+        for(int i = 0; i < Panels.Length; i++)
         {
             Panels[i].SetActive(false);
         }

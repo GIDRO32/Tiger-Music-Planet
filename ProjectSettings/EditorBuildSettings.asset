@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: bfa6a8e60fcb10b41a9e83ddfccbdb63
+  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 73cd963866a8fa14fac819b0db3adb10
   - enabled: 1
@@ -17,4 +20,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Endless.unity
     guid: 129d88b17182886468a2495d4b7f5aec
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 0ed8ae29e5c14a3409821b104e5fadc0, type: 2}

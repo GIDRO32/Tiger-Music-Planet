@@ -36,11 +36,11 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             comboStreak.SetActive(true);
-            comboCounter+=10;
+            comboCounter++;
         }
         if(health == 100 && comboCounter < 500)
         {
-            coins+=100;
+            coins++;
             Debug.Log(coins);
         }
         else if(health == 100 && comboCounter >= 500)

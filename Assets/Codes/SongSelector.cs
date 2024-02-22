@@ -11,6 +11,9 @@ public class SongSelector : MonoBehaviour
     public Text songDisplayText; // Text to display the current song name
     private int currentIndex = 0; // Current index in the song list
     private int currentBPM = 100;
+    public float speedMultiplier = 20f; // Current speed multiplier for planet rotation
+    public float speedChangeAmount = 10f; // Amount to change speed by with each button press
+    public Text speedDisplayText;
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -33,6 +36,26 @@ void Start()
     }
 
     UpdateSongDisplay();
+    UpdateSpeedDisplay();
+}
+public void IncreaseSpeed()
+{
+    speedMultiplier += speedChangeAmount; // Update local multiplier
+    AudioManager.Instance.rotationSpeedMultiplier = speedMultiplier; // Sync with AudioManager
+    UpdateSpeedDisplay();
+}
+public void DecreaseSpeed()
+{
+    speedMultiplier = Mathf.Max(20f, speedMultiplier - speedChangeAmount); // Update local multiplier
+    AudioManager.Instance.rotationSpeedMultiplier = speedMultiplier; // Sync with AudioManager
+    UpdateSpeedDisplay();
+}
+void UpdateSpeedDisplay()
+{
+    if (speedDisplayText != null)
+    {
+        speedDisplayText.text = $"Speed: {speedMultiplier}"; // Format the speed to one decimal place
+    }
 }
 private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -88,7 +111,7 @@ public void PopulateSongs()
 }
 
 
-void UpdateSongDisplay()
+public void UpdateSongDisplay()
 {
     if (Songs.Count > 0 && currentIndex >= 0 && currentIndex < Songs.Count)
     {

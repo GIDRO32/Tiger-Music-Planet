@@ -12,6 +12,7 @@ public class EndlessMode : MonoBehaviour
     public int bpm = 120; // Beats per minute, controls spawn rate
 
     private float spawnInterval; // Time between spawns, based on bpm
+    private float bpmDoublingInterval = 90f; // 1.5 minutes in seconds
 
 void Start()
 {
@@ -22,11 +23,13 @@ void Start()
         GetComponent<AudioSource>().Play();
 
         // Adjust spawn rate based on selected BPM
-        bpm = AudioManager.Instance.selectedBPM;
+        SetBPM(AudioManager.Instance.selectedBPM/2);
     }
 
+    
     CalculateSpawnInterval();
     StartCoroutine(SpawnPlanets());
+    StartCoroutine(DoubleBPM());
 }
 
 
@@ -65,5 +68,18 @@ void SpawnPlanet()
         }
     }
 }
+IEnumerator DoubleBPM()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(bpmDoublingInterval);
 
+            // Double the effective BPM and adjust spawn interval accordingly
+            spawnInterval /= 2;
+        }
+    }
+    void SetBPM(int bpm)
+    {
+        spawnInterval = 60f / bpm;
+    }
 }

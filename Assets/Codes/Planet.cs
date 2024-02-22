@@ -7,6 +7,7 @@ public class Planet : MonoBehaviour
     private GameObject destroyZone;
     public PlayerHealth playerHealth; // Assign this in the inspector or find it dynamically
     private bool wasClicked = false;
+    public float baseRotationSpeed = 20f;
 
 
     public void Initialize(GameObject orbitTarget, Collider2D clickZone, GameObject destroyZone)
@@ -22,6 +23,7 @@ public class Planet : MonoBehaviour
 }
     void Update()
     {
+        
         // Orbit around the target
         OrbitAroundTarget();
 
@@ -34,9 +36,14 @@ public class Planet : MonoBehaviour
 
 void OrbitAroundTarget()
 {
+        float rotationSpeed = baseRotationSpeed;
+        if (AudioManager.Instance != null)
+        {
+            rotationSpeed = AudioManager.Instance.rotationSpeedMultiplier;
+        }
     if (orbitTarget != null)
     {
-        transform.RotateAround(orbitTarget.transform.position, Vector3.forward, 20 * Time.deltaTime); // Adjust speed as needed
+        transform.RotateAround(orbitTarget.transform.position, Vector3.forward, AudioManager.Instance.rotationSpeedMultiplier * Time.deltaTime);
     }
 }
 public void SetSkin(Sprite newSkin)
