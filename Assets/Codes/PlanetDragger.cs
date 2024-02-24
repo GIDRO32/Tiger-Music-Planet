@@ -15,7 +15,7 @@ public class PlanetDragger : MonoBehaviour
         if (isDragging)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, transform.position.z);
+            // transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, transform.position.z);
         }
 
         if (Input.GetMouseButtonUp(0) && isDragging)

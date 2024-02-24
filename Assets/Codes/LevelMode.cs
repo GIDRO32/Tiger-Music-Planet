@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,16 @@ public class LevelMode : MonoBehaviour
     private bool extraTimeUsed = false; // To check if the extra time button has been used
     public Button extraTimeButton; // Assign in the inspector
     public Text timerCounter;
+    public AudioSource sounds;
+    public AudioClip StageClear;
+    public AudioClip TimeOut;
+    public AudioClip AddSomeTime;
+    public AudioClip resetOrbits;
+    private bool gameOverSoundPlayed = false;
 
     void Start()
     {
+        Time.timeScale = 1f;
         timerSlider.maxValue = levelTimer; 
         timerSlider.value = levelTimer;
         Interface.SetActive(false);
@@ -126,6 +134,7 @@ else
     // Check if the order matches after all sounds have been played
     if (isCorrectOrder)
     {
+        sounds.PlayOneShot(StageClear);
         Debug.Log("WIN!");
         CompletePanel.SetActive(true);
         Time.timeScale = 0f;
@@ -135,17 +144,43 @@ else
         Debug.Log("Try again...");
     }
 }
-    public void PlayAllSoundsSequentially()
+IEnumerator MoveCameraToPositionY(float targetY, float duration)
+{
+    float time = 0;
+    Vector3 startPosition = Camera.main.transform.position;
+    Vector3 endPosition = new Vector3(startPosition.x, targetY, startPosition.z);
+
+    while (time < duration)
     {
-        ConstructMusicPattern();
-        StartCoroutine(PlaySoundsFromPattern());
+        time += Time.deltaTime;
+        float t = time / duration;
+        Camera.main.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+        yield return null;
     }
+
+    Camera.main.transform.position = endPosition; // Ensure the camera is exactly in the right position
+}
+public void PlayAllSoundsSequentially()
+{
+    StartCoroutine(MoveCameraAndPlaySounds());
+}
+
+IEnumerator MoveCameraAndPlaySounds()
+{
+    // Move the camera to Y position 0 over 1 second (adjust duration as needed)
+    yield return StartCoroutine(MoveCameraToPositionY(0f, 1f));
+
+    // After the camera has reached its position, construct the music pattern and play sounds
+    ConstructMusicPattern();
+    StartCoroutine(PlaySoundsFromPattern());
+}
 public void ShowPattern()
 {
     StartCoroutine(PlaySoundsFromOrbitAudioPairs());
 }
 public void StartLevel()
 {
+    sounds.PlayOneShot(AddSomeTime);
     StartPanel.SetActive(false);
     Interface.SetActive(true);
 }
@@ -181,6 +216,7 @@ IEnumerator PlaySoundsFromOrbitAudioPairs()
 }
 public void DestroyAllPlanetsOnOrbits()
 {
+    sounds.PlayOneShot(resetOrbits);
     foreach (var planet in FindObjectsOfType<PlanetController>())
     {
         // Check if the planet is within any orbit collider
@@ -258,17 +294,22 @@ public void DestroyAllPlanetsOnOrbits()
         }
         else
         {
+           if (!gameOverSoundPlayed)
+            {
             Time.timeScale = 0f;
-            // Time's up - show the Game Over panel
             gameOverPanel.SetActive(true);
-            // Optional: Disable the extra time button to prevent it from being used after the game is over
             extraTimeButton.interactable = false;
+            sounds.volume = 0.5f; // Adjust the volume as needed
+            sounds.PlayOneShot(TimeOut);
+            gameOverSoundPlayed = true; // Prevent further plays
+            }
         }
     }
     public void AddExtraTime()
     {
         if (!extraTimeUsed)
         {
+            sounds.PlayOneShot(AddSomeTime);
             levelTimer += 30.0f; // Add 30 seconds to the timer
             extraTimeUsed = true; // Prevent further use of the button in this level
             extraTimeButton.interactable = false; // Disable the button

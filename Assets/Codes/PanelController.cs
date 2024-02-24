@@ -21,6 +21,7 @@ public class PanelController : MonoBehaviour
     }
 public void OpenPanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     Time.timeScale = 0f;
     Interface.SetActive(false);
     Panels[index].SetActive(true);
@@ -36,6 +37,7 @@ public void SoundTest()
 
 public void ClosePanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     Time.timeScale = 1f;
     Interface.SetActive(true);
     Panels[index].SetActive(false);

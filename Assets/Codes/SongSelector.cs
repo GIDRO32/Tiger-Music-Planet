@@ -8,11 +8,12 @@ public class SongSelector : MonoBehaviour
     public List<Song> Songs = new List<Song>(); // List of songs
     public AudioSource audioSource; // AudioSource to play the sound when reaching bounds
     public AudioClip boundarySound; // Sound to play when reaching list bounds
+    public AudioClip Choosing;
     public Text songDisplayText; // Text to display the current song name
     private int currentIndex = 0; // Current index in the song list
     private int currentBPM = 100;
     public float speedMultiplier = 20f; // Current speed multiplier for planet rotation
-    public float speedChangeAmount = 10f; // Amount to change speed by with each button press
+    public float speedChangeAmount = 5f; // Amount to change speed by with each button press
     public Text speedDisplayText;
     void Awake()
     {
@@ -40,12 +41,14 @@ void Start()
 }
 public void IncreaseSpeed()
 {
+    audioSource.PlayOneShot(Choosing);
     speedMultiplier += speedChangeAmount; // Update local multiplier
     AudioManager.Instance.rotationSpeedMultiplier = speedMultiplier; // Sync with AudioManager
     UpdateSpeedDisplay();
 }
 public void DecreaseSpeed()
 {
+    audioSource.PlayOneShot(Choosing);
     speedMultiplier = Mathf.Max(20f, speedMultiplier - speedChangeAmount); // Update local multiplier
     AudioManager.Instance.rotationSpeedMultiplier = speedMultiplier; // Sync with AudioManager
     UpdateSpeedDisplay();
@@ -70,6 +73,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (currentIndex < Songs.Count - 1)
         {
+            audioSource.PlayOneShot(Choosing);
             currentBPM += 10;
             currentIndex++;
             UpdateSongDisplay();
@@ -85,6 +89,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (currentIndex > 0)
         {
+            audioSource.PlayOneShot(Choosing);
             currentBPM -= 10;
             currentIndex--;
             UpdateSongDisplay();
@@ -97,9 +102,11 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     }
     public void ClearSongs()
 {
-    Songs.Clear();
+    // Songs.Clear();
     currentIndex = 0; // Reset the index to the beginning
     songDisplayText.text = ""; // Clear the song display text
+    currentBPM = 100;
+    // Songs = Profile.Instance.GetCurrentSkinSongs();
 }
 public void PopulateSongs()
 {

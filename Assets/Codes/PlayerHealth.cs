@@ -14,10 +14,13 @@ public class PlayerHealth : MonoBehaviour
     private int judgement_index = 0;
     public GameObject[] judgements; 
     public Text comboValue;
+    public Text coinCounter;
     private int balance;
     private int coins = 0;
     private bool IsLost = false;
     private bool balanceUpdated = false;
+    public AudioSource SFX;
+    public AudioClip[] Effects;
 
     void Start()
     {
@@ -48,6 +51,7 @@ public class PlayerHealth : MonoBehaviour
             coins += 5;
             Debug.Log(coins);
         }
+        SFX.PlayOneShot(Effects[0]);
     }
 
     public void DecreaseHealth()
@@ -57,7 +61,7 @@ public class PlayerHealth : MonoBehaviour
             health -= 5;
             health = Mathf.Max(health, 0); // Ensure health doesn't drop below 0
         }
-
+        SFX.PlayOneShot(Effects[1]);
         comboStreak.SetActive(false);
         comboCounter = 0;
     }
@@ -91,6 +95,7 @@ public class PlayerHealth : MonoBehaviour
 }
     void Update()
     {
+        coinCounter.text = coins.ToString();
         if(!IsLost)
         {
         comboValue.text = "Combo:\n" + comboCounter.ToString();
@@ -122,5 +127,6 @@ public class PlayerHealth : MonoBehaviour
         IsLost = true;
         Interface.SetActive(false);
         GameOver.SetActive(true);
+        SFX.PlayOneShot(Effects[2]);
     }
 }

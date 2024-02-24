@@ -26,7 +26,7 @@ void Start()
         SetBPM(AudioManager.Instance.selectedBPM/2);
     }
 
-    
+    Time.timeScale = 1f;
     CalculateSpawnInterval();
     StartCoroutine(SpawnPlanets());
     StartCoroutine(DoubleBPM());
@@ -41,6 +41,7 @@ void Start()
 
     IEnumerator SpawnPlanets()
     {
+        Debug.Log("SpawnPlanets coroutine started.");
         while (true)
         {
             SpawnPlanet();

@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
     }
 public void OpenPanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     MenuButtons.SetActive(false);
     Panels[index].SetActive(true);
 }
@@ -31,6 +32,7 @@ public void SoundTest()
 
 public void ClosePanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     MenuButtons.SetActive(true);
     Panels[index].SetActive(false);
 }

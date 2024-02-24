@@ -892,7 +892,9 @@ MonoBehaviour:
   - {fileID: 1925384332}
   musicSource: {fileID: 2061017971}
   SFX: {fileID: 397808533}
-  Effects: []
+  Effects:
+  - {fileID: 8300000, guid: edfb870af254e734cb23d94aa3453623, type: 3}
+  - {fileID: 8300000, guid: 01a370080dca0724aa9447be15af7375, type: 3}
 --- !u!1 &166610309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,8 +1235,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PanelController, Assembly-CSharp
+      - m_Target: {fileID: 151029971}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: SoundTest
         m_Mode: 1
         m_Arguments:
@@ -3617,18 +3619,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 151029971}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: ClosePanel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1781638612}
         m_TargetAssemblyTypeName: SongSelector, Assembly-CSharp
         m_MethodName: ClearSongs
@@ -3637,6 +3627,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 151029971}
+        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8705,6 +8707,7 @@ MonoBehaviour:
   Songs: []
   audioSource: {fileID: 397808533}
   boundarySound: {fileID: 8300000, guid: 13993d13e66d3a8459b6d389603a9940, type: 3}
+  Choosing: {fileID: 8300000, guid: 01a370080dca0724aa9447be15af7375, type: 3}
   songDisplayText: {fileID: 1296495778}
   speedMultiplier: 20
   speedChangeAmount: 10
