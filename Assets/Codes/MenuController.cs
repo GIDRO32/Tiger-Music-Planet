@@ -18,6 +18,10 @@ public class MenuController : MonoBehaviour
         {
             Panels[i].SetActive(false);
         }
+        var endlessModePanel = GameObject.Find("SetTempo");
+    if (endlessModePanel != null) {
+        Destroy(endlessModePanel);
+    }
     }
 public void OpenPanel(int index)
 {

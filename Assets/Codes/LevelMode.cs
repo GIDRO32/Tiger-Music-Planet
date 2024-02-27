@@ -23,7 +23,7 @@ public class LevelMode : MonoBehaviour
     [SerializeField] private List<List<AudioClip>> MusicPatterns = new List<List<AudioClip>>(); // List of lists to hold music patterns for each orbit
     [SerializeField] private List<OrbitAudioPair> orbitAudioPairs = new List<OrbitAudioPair>();
     private Dictionary<GameObject, List<AudioClip>> orbitSoundOrder = new Dictionary<GameObject, List<AudioClip>>();
-    public float levelTimer = 60.0f; // Total time for the level in seconds
+    public float levelTimer = 70.0f; // Total time for the level in seconds
     public Slider timerSlider; // Assign in the inspector
     public GameObject gameOverPanel; // Assign in the inspector
     private bool extraTimeUsed = false; // To check if the extra time button has been used
@@ -35,9 +35,14 @@ public class LevelMode : MonoBehaviour
     public AudioClip AddSomeTime;
     public AudioClip resetOrbits;
     private bool gameOverSoundPlayed = false;
+    private int LevelState;
+    public string LevelTag;
+    public float patternPlayDelay;
+    public Button playAllSoundsButton;
 
     void Start()
     {
+        LevelState = PlayerPrefs.GetInt(LevelTag, LevelState);
         Time.timeScale = 1f;
         timerSlider.maxValue = levelTimer; 
         timerSlider.value = levelTimer;
@@ -93,11 +98,7 @@ void ConstructMusicPattern()
 
 IEnumerator PlaySoundsFromPattern()
 {
-    bool isCorrectOrder = true; // Assume true until proven otherwise
-
-    // Temporary list to store the sequence of played sounds for comparison
-    List<AudioClip> playedSounds = new List<AudioClip>();
-
+    // Play the sounds first
     foreach (var orbitClips in MusicPatterns)
     {
         foreach (var clip in orbitClips)
@@ -105,35 +106,55 @@ IEnumerator PlaySoundsFromPattern()
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.clip = clip;
             audioSource.Play();
-            playedSounds.Add(clip); // Add the clip to the playedSounds list for later comparison
+            // yield return new WaitForSeconds(clip.length); // Wait for the clip to finish playing
             Destroy(audioSource, clip.length);
             Debug.Log($"Playing AudioClip: {clip.name}");
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); // Additional wait time between orbits
     }
-List<AudioClip> correctOrderSounds = orbitSoundOrder.SelectMany(pair => pair.Value).ToList();
-if (playedSounds.Count == correctOrderSounds.Count)
-{
-    for (int i = 0; i < playedSounds.Count; i++)
+
+    bool allOrbitsCorrect = true; // Assume all orbits are correct until proven otherwise
+
+    // Adjusting for orbitSoundOrder being a Dictionary<GameObject, List<AudioClip>>
+    var orbitGameObjects = orbitSoundOrder.Keys.ToList();
+
+    if (MusicPatterns.Count != orbitSoundOrder.Count)
     {
-        if (playedSounds[i] != correctOrderSounds[i])
+        allOrbitsCorrect = false; // Immediate fail if the number of populated orbits doesn't match the required number
+    }
+    else
+    {
+        for (int orbitIndex = 0; orbitIndex < orbitGameObjects.Count; orbitIndex++)
         {
-            isCorrectOrder = false;
-            break;
+            var orbitGameObject = orbitGameObjects[orbitIndex];
+            if (orbitIndex < MusicPatterns.Count) // Ensure we don't go out of bounds
+            {
+                var playerOrbitSounds = new HashSet<AudioClip>(MusicPatterns[orbitIndex]);
+                var correctOrbitSounds = new HashSet<AudioClip>(orbitSoundOrder[orbitGameObject]);
+
+                if (!playerOrbitSounds.SetEquals(correctOrbitSounds))
+                {
+                    allOrbitsCorrect = false;
+                    break; // Exit the loop early if any orbit doesn't match
+                }
+            }
+            else
+            {
+                // If there are fewer player inputs than required orbits, it's an automatic fail
+                allOrbitsCorrect = false;
+                break;
+            }
         }
     }
-}
-else
-{
-    isCorrectOrder = false;
-}
 
-    // Clearing MusicPatterns after playing
+    // Clearing MusicPatterns after checking
     MusicPatterns.Clear();
 
-    // Check if the order matches after all sounds have been played
-    if (isCorrectOrder)
+    // Check if all orbits match after verification
+    if (allOrbitsCorrect)
     {
+        LevelState = 1;
+        PlayerPrefs.SetInt(LevelTag, LevelState);
         sounds.PlayOneShot(StageClear);
         Debug.Log("WIN!");
         CompletePanel.SetActive(true);
@@ -143,7 +164,13 @@ else
     {
         Debug.Log("Try again...");
     }
+
+    yield return null; // This yield return is optional here but maintains structure consistency
 }
+
+
+
+
 IEnumerator MoveCameraToPositionY(float targetY, float duration)
 {
     float time = 0;
@@ -161,14 +188,25 @@ IEnumerator MoveCameraToPositionY(float targetY, float duration)
     Camera.main.transform.position = endPosition; // Ensure the camera is exactly in the right position
 }
 public void PlayAllSoundsSequentially()
-{
-    StartCoroutine(MoveCameraAndPlaySounds());
-}
+    {
+        if (playAllSoundsButton.interactable)
+        {
+            StartCoroutine(MoveCameraAndPlaySounds());
+            StartCoroutine(DisablePlayAllSoundsButtonTemporarily());
+        }
+    }
+
+    IEnumerator DisablePlayAllSoundsButtonTemporarily()
+    {
+        playAllSoundsButton.interactable = false; // Disable the button
+        yield return new WaitForSeconds(10); // Wait for 10 seconds
+        playAllSoundsButton.interactable = true; // Re-enable the button
+    }
 
 IEnumerator MoveCameraAndPlaySounds()
 {
     // Move the camera to Y position 0 over 1 second (adjust duration as needed)
-    yield return StartCoroutine(MoveCameraToPositionY(0f, 1f));
+    yield return StartCoroutine(MoveCameraToPositionY(0f, 0.1f));
 
     // After the camera has reached its position, construct the music pattern and play sounds
     ConstructMusicPattern();
@@ -177,6 +215,7 @@ IEnumerator MoveCameraAndPlaySounds()
 public void ShowPattern()
 {
     StartCoroutine(PlaySoundsFromOrbitAudioPairs());
+    PlayButton.SetActive(false);
 }
 public void StartLevel()
 {
@@ -186,34 +225,51 @@ public void StartLevel()
 }
 IEnumerator PlaySoundsFromOrbitAudioPairs()
 {
-    List<AudioClip> playedSounds = new List<AudioClip>();
+    List<AudioSource> activeAudioSources = new List<AudioSource>();
     int indicatorIndex = 0;
 
     foreach (OrbitAudioPair pair in orbitAudioPairs)
     {
+        if (indicatorIndex < buttonIndicators.Length)
+        {
+            buttonIndicators[indicatorIndex].SetActive(true); // Activate indicator for the current pair
+        }
+
         foreach (AudioClip clip in pair.audioClips)
         {
-            if (indicatorIndex < buttonIndicators.Length)
-            {
-                // Activate the corresponding button indicator
-                buttonIndicators[indicatorIndex].SetActive(true);
-                indicatorIndex++; // Move to the next indicator for the next iteration
-            }
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.clip = clip;
             audioSource.Play();
-            playedSounds.Add(clip); // Add the clip to the playedSounds list for later comparison
-            Destroy(audioSource, clip.length);
-            Debug.Log($"Playing AudioClip: {clip.name}");
+            activeAudioSources.Add(audioSource); // Keep track of this AudioSource to destroy it later
         }
-        yield return new WaitForSeconds(0.5f);
-        buttonIndicators[indicatorIndex - 1].SetActive(false);
+
+        yield return new WaitForSeconds(patternPlayDelay); // Wait for the pattern delay before proceeding to the next pair
+
+        if (indicatorIndex < buttonIndicators.Length)
+        {
+            buttonIndicators[indicatorIndex].SetActive(false); // Deactivate the current indicator
+            indicatorIndex++; // Move to the next indicator
+        }
     }
+
+    // Ensure all audio sources are destroyed after their clips have finished playing
+    foreach (var source in activeAudioSources)
+    {
+        if (source != null) // Check if the source hasn't already been destroyed
+        {
+            Destroy(source, source.clip.length);
+        }
+    }
+
+    // Ensure that all indicators are turned off at the end
     foreach (var indicator in buttonIndicators)
     {
-         indicator.SetActive(false);
+        indicator.SetActive(false);
     }
 }
+
+
+
 public void DestroyAllPlanetsOnOrbits()
 {
     sounds.PlayOneShot(resetOrbits);
