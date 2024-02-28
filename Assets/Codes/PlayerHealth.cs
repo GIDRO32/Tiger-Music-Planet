@@ -39,16 +39,16 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             comboStreak.SetActive(true);
-            comboCounter++;
+            comboCounter+=5;
         }
         if(health == 100 && comboCounter < 500)
         {
-            coins++;
+            coins+=10;
             Debug.Log(coins);
         }
         else if(health == 100 && comboCounter >= 500)
         {
-            coins += 5;
+            coins += 50;
             Debug.Log(coins);
         }
         SFX.PlayOneShot(Effects[0]);
