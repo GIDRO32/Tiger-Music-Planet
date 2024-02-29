@@ -15,6 +15,7 @@ public class SongSelector : MonoBehaviour
     public float speedMultiplier = 20f; // Current speed multiplier for planet rotation
     public float speedChangeAmount = 5f; // Amount to change speed by with each button press
     public Text speedDisplayText;
+    public Button PlayButton;
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -131,6 +132,12 @@ public void UpdateSongDisplay()
             AudioManager.Instance.selectedSong = currentSong.Clip;
             AudioManager.Instance.selectedBPM = currentBPM;
         }
+        PlayButton.interactable = true;
+    }
+    else
+    {
+        songDisplayText.text = "GO TO SHOP FIRST!";
+        PlayButton.interactable = false;
     }
 }
 

@@ -1186,6 +1186,7 @@ GameObject:
   - component: {fileID: 151029967}
   - component: {fileID: 151029970}
   - component: {fileID: 151029971}
+  - component: {fileID: 151029972}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1295,6 +1296,27 @@ MonoBehaviour:
   Effects:
   - {fileID: 8300000, guid: edfb870af254e734cb23d94aa3453623, type: 3}
   - {fileID: 8300000, guid: 01a370080dca0724aa9447be15af7375, type: 3}
+--- !u!114 &151029972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151029966}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156922b32839fb148b49422da1b2ae68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Songs: []
+  audioSource: {fileID: 397808533}
+  boundarySound: {fileID: 8300000, guid: 13993d13e66d3a8459b6d389603a9940, type: 3}
+  Choosing: {fileID: 8300000, guid: 01a370080dca0724aa9447be15af7375, type: 3}
+  songDisplayText: {fileID: 1296495778}
+  speedMultiplier: 20
+  speedChangeAmount: 5
+  speedDisplayText: {fileID: 1503660755}
+  PlayButton: {fileID: 116245688}
 --- !u!1 &152447357
 GameObject:
   m_ObjectHideFlags: 0
@@ -12120,6 +12142,7 @@ MonoBehaviour:
   speedMultiplier: 20
   speedChangeAmount: 5
   speedDisplayText: {fileID: 1503660755}
+  PlayButton: {fileID: 116245688}
 --- !u!114 &1781638613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13736,7 +13759,7 @@ MonoBehaviour:
       SongName: Wormhole
       Composer: ClockbeatAdelony87
   - Image: {fileID: 21300000, guid: e56d797e94996b449acaaf4f3adc9692, type: 3}
-    Title: Classic
+    Title: Orchestral
     price: 4000
     isAvailable: 0
     Songs:

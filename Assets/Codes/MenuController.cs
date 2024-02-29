@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     public AudioSource SFX;
     public AudioClip[] Effects;
     // Start is called before the first frame update
+    
     void Start()
     {
         MenuButtons.SetActive(true);
