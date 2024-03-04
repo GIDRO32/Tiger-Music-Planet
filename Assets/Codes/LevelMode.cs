@@ -28,7 +28,11 @@ public class LevelMode : MonoBehaviour
     public GameObject gameOverPanel; // Assign in the inspector
     private bool extraTimeUsed = false; // To check if the extra time button has been used
     public Button extraTimeButton; // Assign in the inspector
+    public Button hintButton;
     public Text timerCounter;
+    public Text playerCooldown;
+    public Text A1_Counter;
+    public Text A2_Counter;
     public AudioSource sounds;
     public AudioClip StageClear;
     public AudioClip TimeOut;
@@ -39,9 +43,13 @@ public class LevelMode : MonoBehaviour
     public string LevelTag;
     public float patternPlayDelay;
     public Button playAllSoundsButton;
+    public GameObject[] hintBoxes;
 
     void Start()
     {
+        playerCooldown.text = "";
+        A1_Counter.text = "1";
+        A1_Counter.text = "1";
         LevelState = PlayerPrefs.GetInt(LevelTag, LevelState);
         Time.timeScale = 1f;
         timerSlider.maxValue = levelTimer; 
@@ -69,6 +77,11 @@ public class LevelMode : MonoBehaviour
         {
             orbitSoundOrder[pair.orbit] = pair.audioClips;
         }
+        foreach (var hintBox in hintBoxes)
+    {
+        hintBox.SetActive(false);
+    }
+    // hintButton.onClick.AddListener(ShowRandomHintBox);
         MusicPatterns.Clear(); 
     }
 void ConstructMusicPattern()
@@ -93,8 +106,22 @@ void ConstructMusicPattern()
             MusicPatterns.Add(orbitClips);
         }
     }
-
-
+IEnumerator ShowHintBoxCoroutine(GameObject hintBox)
+{
+    hintButton.interactable = false; // Disable the hint button after showing the hint
+    A2_Counter.text = "0";
+    hintBox.SetActive(true);
+    yield return new WaitForSeconds(1f);
+    hintBox.SetActive(false);
+}
+public void ShowRandomHintBox()
+{
+    if (hintBoxes.Length > 0)
+    {
+        int randomIndex = Random.Range(0, hintBoxes.Length);
+        StartCoroutine(ShowHintBoxCoroutine(hintBoxes[randomIndex]));
+    }
+}
 
 IEnumerator PlaySoundsFromPattern()
 {
@@ -196,12 +223,19 @@ public void PlayAllSoundsSequentially()
         }
     }
 
-    IEnumerator DisablePlayAllSoundsButtonTemporarily()
+IEnumerator DisablePlayAllSoundsButtonTemporarily()
+{
+    playAllSoundsButton.interactable = false; // Disable the button
+    float cooldownTime = 10f; // Total cooldown time
+    while (cooldownTime > 0)
     {
-        playAllSoundsButton.interactable = false; // Disable the button
-        yield return new WaitForSeconds(10); // Wait for 10 seconds
-        playAllSoundsButton.interactable = true; // Re-enable the button
+        playerCooldown.text = cooldownTime.ToString("F2"); // Update the cooldown text
+        yield return new WaitForSeconds(0.01f); // Wait for a tenth of a second before updating again
+        cooldownTime -= 0.01f; // Decrease the cooldown time
     }
+    playerCooldown.text = ""; // Clear the cooldown text
+    playAllSoundsButton.interactable = true; // Re-enable the button
+}
 
 IEnumerator MoveCameraAndPlaySounds()
 {
@@ -288,7 +322,7 @@ public void DestroyAllPlanetsOnOrbits()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-        timerCounter.text = levelTimer.ToString("F1");
+        timerCounter.text = levelTimer.ToString("F2");
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -365,6 +399,7 @@ public void DestroyAllPlanetsOnOrbits()
     {
         if (!extraTimeUsed)
         {
+            A1_Counter.text = "0";
             sounds.PlayOneShot(AddSomeTime);
             levelTimer += 30.0f; // Add 30 seconds to the timer
             extraTimeUsed = true; // Prevent further use of the button in this level

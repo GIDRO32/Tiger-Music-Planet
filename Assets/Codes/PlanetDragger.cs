@@ -16,6 +16,7 @@ public class PlanetDragger : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, transform.position.z);
+            transform.SetAsLastSibling();
         }
 
         if (Input.GetMouseButtonUp(0) && isDragging)
@@ -25,12 +26,15 @@ public class PlanetDragger : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
-    {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        offset = transform.position - mousePos;
-        isDragging = true;
-    }
+void OnMouseDown()
+{
+    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    offset = transform.position - mousePos;
+    isDragging = true;
+
+    // Bring the dragged planet to the front by setting it as the last sibling
+    transform.SetAsLastSibling();
+}
 
     void ReleasePlanet()
     {
