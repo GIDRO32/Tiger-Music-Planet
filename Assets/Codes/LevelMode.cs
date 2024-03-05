@@ -44,9 +44,11 @@ public class LevelMode : MonoBehaviour
     public float patternPlayDelay;
     public Button playAllSoundsButton;
     public GameObject[] hintBoxes;
+    public GameObject PlanetVisibility;
 
     void Start()
     {
+        PlanetVisibility.SetActive(true);
         playerCooldown.text = "";
         A1_Counter.text = "1";
         A1_Counter.text = "1";
@@ -184,6 +186,7 @@ IEnumerator PlaySoundsFromPattern()
         PlayerPrefs.SetInt(LevelTag, LevelState);
         sounds.PlayOneShot(StageClear);
         Debug.Log("WIN!");
+        PlanetVisibility.SetActive(false);
         CompletePanel.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -388,6 +391,7 @@ public void DestroyAllPlanetsOnOrbits()
             {
             Time.timeScale = 0f;
             gameOverPanel.SetActive(true);
+            PlanetVisibility.SetActive(false);
             extraTimeButton.interactable = false;
             sounds.volume = 0.5f; // Adjust the volume as needed
             sounds.PlayOneShot(TimeOut);
