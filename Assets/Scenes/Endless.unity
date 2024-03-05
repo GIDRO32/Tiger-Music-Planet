@@ -4257,6 +4257,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ec662094d09ab7648b9e471f78d8802f, type: 3}
   - {fileID: 21300000, guid: 673e9efc942c45747ac23a78b50d04a7, type: 3}
   - {fileID: 21300000, guid: 09b871bde1028df4385221d95ad51a86, type: 3}
+  - {fileID: 21300000, guid: d93b6980f220ee543a17e16d36d01960, type: 3}
   bpm: 80
 --- !u!114 &1533700503
 MonoBehaviour:
@@ -4302,6 +4303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Interface: {fileID: 17739345}
+  PlanetVisibility: {fileID: 0}
   Panels:
   - {fileID: 572201751}
   - {fileID: 243304362}
