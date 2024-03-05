@@ -45,7 +45,7 @@ public class LevelMode : MonoBehaviour
     public Button playAllSoundsButton;
     public GameObject[] hintBoxes;
     public GameObject PlanetVisibility;
-
+    public Text A2_Mark;
     void Start()
     {
         PlanetVisibility.SetActive(true);
@@ -110,6 +110,9 @@ void ConstructMusicPattern()
     }
 IEnumerator ShowHintBoxCoroutine(GameObject hintBox)
 {
+    Color Text_Alpha = A2_Mark.color;
+    Text_Alpha.a = 0.5f;
+    A2_Mark.color = Text_Alpha;
     hintButton.interactable = false; // Disable the hint button after showing the hint
     A2_Counter.text = "0";
     hintBox.SetActive(true);
@@ -256,6 +259,7 @@ public void ShowPattern()
 }
 public void StartLevel()
 {
+    levelTimer = 70f;
     sounds.PlayOneShot(AddSomeTime);
     StartPanel.SetActive(false);
     Interface.SetActive(true);
