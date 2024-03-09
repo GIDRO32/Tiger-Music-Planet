@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
     }
     public void ReturnToTitle()
     {
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("Menu");
     }
 
     // Update is called once per frame
