@@ -75,7 +75,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         if (currentIndex < Songs.Count - 1)
         {
             audioSource.PlayOneShot(Choosing);
-            currentBPM += 10;
+            currentBPM += 20;
             currentIndex++;
             UpdateSongDisplay();
         }
@@ -91,7 +91,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         if (currentIndex > 0)
         {
             audioSource.PlayOneShot(Choosing);
-            currentBPM -= 10;
+            currentBPM -= 20;
             currentIndex--;
             UpdateSongDisplay();
         }
