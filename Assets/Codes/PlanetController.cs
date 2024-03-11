@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+
 
 public class PlanetController : MonoBehaviour
 {
     public AudioClip[] orbitSounds; // Array of audio clips for each orbit
     private AudioSource audioSource;
+    public AudioMixer Sound_Volume;
     public bool isBeingDragged = false; // Flag to check if the planet is being dragged
 
     void Start()
@@ -51,6 +54,7 @@ public void CloneAndDrag()
     {
         if (!isBeingDragged && collision.CompareTag("Orbit")) // Check if not being dragged
         {
+            Debug.Log("On the orbit");
             int orbitIndex = GetOrbitIndex(collision.gameObject);
             if (orbitIndex != -1 && orbitIndex < orbitSounds.Length)
             {

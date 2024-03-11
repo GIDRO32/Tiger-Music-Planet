@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: 4ea9b62b63f0a8a4a98baaa2113e5531
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 50
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2136
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a7cd758367eb54fa80ec4dc5b3be95
+      internalID: 1824837105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 2136
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0b7b010023a49849a6e956501f444a0
+      internalID: -1884550074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 2136
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68b798d6a3dd8c449aff78cee0266759
+      internalID: 2089013735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 2136
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aa21b38999d06248809a63e3856f016
+      internalID: -413344557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2136
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f49ca1a178105248a1984b22d358fbe
+      internalID: 42369462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1780
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 123415cbe1ca08941a56baf9496c1ae5
+      internalID: 1413031082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1780
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e7f45d861c1778499e286350a107424
+      internalID: -1609253036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1780
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2147fb4abfec8c34ebe3c16caf7ae715
+      internalID: 1670927101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1780
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14c721c5ece37834485e61d88f4c3a34
+      internalID: -850211393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1780
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28acefb00aa809644a6b8166bc791721
+      internalID: 168985237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1424
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80025786388ec5e4a94300ff45df86df
+      internalID: 1043514021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1424
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2a881e61a31a9045a8147e9e026eea2
+      internalID: 737556345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1424
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2606974014fd5e43ac83d757e775b4f
+      internalID: -1841317705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1424
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa9c076a437890b42bdbaee1bbc9abdc
+      internalID: 1254917822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1424
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1faf1e0be5163bb48bae38506a7ff77f
+      internalID: 1511238549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1068
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e24515b230c8efe44aad3a7ff9f50c3c
+      internalID: 1378629358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1068
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74490b847b0d91d40a709a054359d4b5
+      internalID: -750057640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1068
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f285f67800983dc43ab83c5864f52b26
+      internalID: -271131886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1068
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd0f547bd152bae49bea2e5d1cfc77d6
+      internalID: 1921365126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1068
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea13610409c38424386d55830737eed0
+      internalID: 1527944025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 712
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6724f8e844b37ab46adb9ece3e91eea1
+      internalID: 1335692071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 712
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745e588601be71d489a179aef783467d
+      internalID: -1926781612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 712
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a990cb990d4fc0347b818111cef2af10
+      internalID: 509240741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_23
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 712
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03895e1de0d51ea49ae124724c2b9ed4
+      internalID: -631366713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_24
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 712
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86de493a7af12ba429dc46611ece7ab4
+      internalID: 4984092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 356
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05169a7750f3f3a4ca7d940b2fa12aab
+      internalID: -1146099349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_26
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 356
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a25c1329718cc741bbe701e29a0b966
+      internalID: -23367879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 356
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43192a25d2bc2474191f1864f0bec06e
+      internalID: -181513317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 356
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1400729515d4cf4fad05d016b92f07d
+      internalID: 245072447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 356
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af196b89bb610842bc35933dc0e63a2
+      internalID: 816766150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec3b46a36018a0744ad5d8a9dc346074
+      internalID: -1495931959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f766a58a50ae38f4bb9ed66dee674b23
+      internalID: -1884574865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_32
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89c344f824bd2b044a537e7b73dd66e6
+      internalID: 333707561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_33
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a473ca60bcd3f48489c79378c8670002
+      internalID: 1109856389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarLoop SpriteSheet_34
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb08540482771448a12d083dcfbd8ec
+      internalID: 1832644628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      StarLoop SpriteSheet_0: 1824837105
+      StarLoop SpriteSheet_1: -1884550074
+      StarLoop SpriteSheet_10: 1043514021
+      StarLoop SpriteSheet_11: 737556345
+      StarLoop SpriteSheet_12: -1841317705
+      StarLoop SpriteSheet_13: 1254917822
+      StarLoop SpriteSheet_14: 1511238549
+      StarLoop SpriteSheet_15: 1378629358
+      StarLoop SpriteSheet_16: -750057640
+      StarLoop SpriteSheet_17: -271131886
+      StarLoop SpriteSheet_18: 1921365126
+      StarLoop SpriteSheet_19: 1527944025
+      StarLoop SpriteSheet_2: 2089013735
+      StarLoop SpriteSheet_20: 1335692071
+      StarLoop SpriteSheet_21: -1926781612
+      StarLoop SpriteSheet_22: 509240741
+      StarLoop SpriteSheet_23: -631366713
+      StarLoop SpriteSheet_24: 4984092
+      StarLoop SpriteSheet_25: -1146099349
+      StarLoop SpriteSheet_26: -23367879
+      StarLoop SpriteSheet_27: -181513317
+      StarLoop SpriteSheet_28: 245072447
+      StarLoop SpriteSheet_29: 816766150
+      StarLoop SpriteSheet_3: -413344557
+      StarLoop SpriteSheet_30: -1495931959
+      StarLoop SpriteSheet_31: -1884574865
+      StarLoop SpriteSheet_32: 333707561
+      StarLoop SpriteSheet_33: 1109856389
+      StarLoop SpriteSheet_34: 1832644628
+      StarLoop SpriteSheet_4: 42369462
+      StarLoop SpriteSheet_5: 1413031082
+      StarLoop SpriteSheet_6: -1609253036
+      StarLoop SpriteSheet_7: 1670927101
+      StarLoop SpriteSheet_8: -850211393
+      StarLoop SpriteSheet_9: 168985237
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -72,10 +72,6 @@ void OnTriggerEnter2D(Collider2D other)
     {
         Destroy(gameObject);
     }
-    // else
-    // {
-    //     Debug.Log($"Collided with something else: {other.gameObject.name}");
-    // }
 }
 void OnTriggerExit2D(Collider2D other)
 {

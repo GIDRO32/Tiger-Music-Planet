@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PanelController : MonoBehaviour
 {
     public GameObject Interface;
+    public GameObject PlanetVisibility;
     public GameObject[] Panels;
     public AudioSource musicSource;
     public AudioSource SFX;
@@ -18,9 +19,12 @@ public class PanelController : MonoBehaviour
             Panels[i].SetActive(false);
         }
         musicSource.Pause();
+        PlanetVisibility.SetActive(true);
     }
 public void OpenPanel(int index)
 {
+    PlanetVisibility.SetActive(false);
+    SFX.PlayOneShot(Effects[1]);
     Time.timeScale = 0f;
     Interface.SetActive(false);
     Panels[index].SetActive(true);
@@ -36,6 +40,8 @@ public void SoundTest()
 
 public void ClosePanel(int index)
 {
+    PlanetVisibility.SetActive(true);
+    SFX.PlayOneShot(Effects[1]);
     Time.timeScale = 1f;
     Interface.SetActive(true);
     Panels[index].SetActive(false);

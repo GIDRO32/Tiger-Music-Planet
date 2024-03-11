@@ -80,7 +80,7 @@ public class Shopping : MonoBehaviour
         PlayerPrefs.Save();
         buyBtn = ShopScrolling.GetChild(itemIndex).GetChild(3).GetComponent<Button>();
         DisableBuyButton();
-        Profile.Instance.AddSkin(ShopItemList[itemIndex].Image,new List<Song>());
+        Profile.Instance.AddSkin(ShopItemList[itemIndex].Image, ShopItemList[itemIndex].Songs);
         }
         else
         {

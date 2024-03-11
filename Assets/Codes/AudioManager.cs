@@ -15,9 +15,5 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Make this object persist across scene changes
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 }

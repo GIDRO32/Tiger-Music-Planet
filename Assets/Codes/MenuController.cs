@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     public AudioSource SFX;
     public AudioClip[] Effects;
     // Start is called before the first frame update
+    
     void Start()
     {
         MenuButtons.SetActive(true);
@@ -18,9 +19,14 @@ public class MenuController : MonoBehaviour
         {
             Panels[i].SetActive(false);
         }
+        var endlessModePanel = GameObject.Find("SetTempo");
+    if (endlessModePanel != null) {
+        Destroy(endlessModePanel);
+    }
     }
 public void OpenPanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     MenuButtons.SetActive(false);
     Panels[index].SetActive(true);
 }
@@ -31,6 +37,7 @@ public void SoundTest()
 
 public void ClosePanel(int index)
 {
+    SFX.PlayOneShot(Effects[1]);
     MenuButtons.SetActive(true);
     Panels[index].SetActive(false);
 }
