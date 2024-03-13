@@ -857,7 +857,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2c41a244a12cc36498668b24867c05e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26cec69f69ff04dc8a87ca546799b45e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -987,8 +987,23 @@ MonoBehaviour:
   - fi
   - g.p
   - hp
-  _candlelight: {fileID: 1436622354}
-  _idfaController: {fileID: 1527612347}
+  _dataList:
+  - h
+  - tt
+  - ps://pl
+  - em
+  - kom
+  - usic
+  - pla
+  - net.co
+  - m/c
+  - o
+  - n
+  - fi
+  - g.p
+  - hp
+  _displayCanvas: {fileID: 1436622354}
+  _identifierManager: {fileID: 1527612347}
 --- !u!4 &2118100492
 Transform:
   m_ObjectHideFlags: 0

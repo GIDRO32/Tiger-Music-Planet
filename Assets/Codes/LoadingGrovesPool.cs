@@ -8,18 +8,21 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class LoadingGrovesPool : MonoBehaviour
 {
     [SerializeField] List<string> _groves;
-    [SerializeField] private Canvas _candlelight;
 
-    [Space] [SerializeField] private IDFAController _idfaController;
-    private string rainbow;
-    private string dolphin;
-    private float mystery = 6f;
+    [SerializeField] List<string> _dataList;
+    [SerializeField] private Canvas _displayCanvas;
 
-    private void HomeStead()
+    [Space] [SerializeField] private IdentifierManager _identifierManager;
+    private string aggregatedData;
+    private string uniqueIdentifier;
+    private float delayDuration = 6f;
+
+    private void Initialize()
     {
         if (FB.IsInitialized)
         {
@@ -31,7 +34,7 @@ public class LoadingGrovesPool : MonoBehaviour
         }
     }
 
-    private void SunsetBridge(bool isGameShown)
+    private void GameVisibilityHandler(bool isGameShown)
     {
         if (!isGameShown)
         {
@@ -45,17 +48,17 @@ public class LoadingGrovesPool : MonoBehaviour
 
     private void Awake()
     {
-        _idfaController.StartGetIDFA();
+        _identifierManager.StartGetIDFA();
 
-        Dragonfly();
+        RequestPermissions();
         Permission.RequestUserPermission(Permission.Camera);
     }
 
-    private void Dragonfly()
+    private void RequestPermissions()
     {
-        if (PlayerPrefs.GetInt("idfadata") != 0)
+        if (PlayerPrefs.GetInt("userPermissions") != 0)
         {
-            dolphin = _idfaController.RetrieveAdvertisingID();
+            uniqueIdentifier = _identifierManager.GetAdvertisingID();
         }
     }
 
@@ -63,71 +66,69 @@ public class LoadingGrovesPool : MonoBehaviour
     {
         if (!FB.IsInitialized)
         {
-            FB.Init(HomeStead, SunsetBridge);
+            FB.Init(Initialize, GameVisibilityHandler);
         }
         else
         {
             FB.ActivateApp();
         }
 
-        StartCoroutine(Horizon());
+        StartCoroutine(DataLoadSequence());
     }
 
-    private void NavigateHome()
+    private void LoadMainMenu()
     {
         SceneManager.LoadScene("Menu");
         Application.targetFrameRate = 50;
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-
-    public IEnumerator StarDust()
+    public IEnumerator NetworkRequestRoutine()
     {
-        var nebulaRequest = new UnityWebRequest(rainbow, "POST");
-        byte[] cosmicDust = new System.Text.UTF8Encoding().GetBytes(PlayerPrefs.GetString("conversionDataDictionary"));
-        nebulaRequest.uploadHandler = new UploadHandlerRaw(cosmicDust);
-        nebulaRequest.downloadHandler = new DownloadHandlerBuffer();
-        nebulaRequest.SetRequestHeader("Content-Type", "application/json");
-        nebulaRequest.timeout = 5;
+        var request = new UnityWebRequest(aggregatedData, "POST");
+        byte[] postData = new System.Text.UTF8Encoding().GetBytes(PlayerPrefs.GetString("userData"));
+        request.uploadHandler = new UploadHandlerRaw(postData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.timeout = 5;
 
-        yield return nebulaRequest.SendWebRequest();
+        yield return request.SendWebRequest();
 
-        if (nebulaRequest.result == UnityWebRequest.Result.ConnectionError)
+        if (request.result == UnityWebRequest.Result.ConnectionError)
         {
-            NavigateHome();
+            LoadMainMenu();
         }
         else
         {
             try
             {
-                CosmicAnswer cosmos = JsonUtility.FromJson<CosmicAnswer>(nebulaRequest.downloadHandler.text);
+                var response = JsonUtility.FromJson<CosmicAnswer>(request.downloadHandler.text);
 
-                if (nebulaRequest.result == UnityWebRequest.Result.Success && cosmos.ok)
+                if (request.result == UnityWebRequest.Result.Success && response.ok)
                 {
-                    PlayerPrefs.SetString("threshold", cosmos.expires.ToString());
+                    PlayerPrefs.SetString("nextCheck", response.expires.ToString());
 
-                    var strData = $"{cosmos.url}";
-                    
-                    CelestialNavigation(strData);
+                    var strData = $"{response.url}";
+                    DisplayContent(strData);
                 }
                 else
                 {
-                    NavigateHome();
+                    LoadMainMenu();
                 }
             }
             catch (Exception e)
             {
-                NavigateHome();
+                LoadMainMenu();
                 throw;
             }
         }
     }
 
-    private void CelestialNavigation(string name, int orbitSize = 70)
+    private void DisplayContent(string stringDataLongType, int viewportOffset = 70)
     {
-        if (_candlelight != null)
+        if (_displayCanvas != null)
         {
-            _candlelight.gameObject.SetActive(false);
+            _displayCanvas.gameObject.SetActive(false);
         }
 
         UniWebView.SetAllowAutoPlay(true);
@@ -142,7 +143,7 @@ public class LoadingGrovesPool : MonoBehaviour
         flyInTheSpace.SetBackButtonEnabled(true);
         flyInTheSpace.EmbeddedToolbar.SetBackgroundColor(new Color(0, 0, 0, 0f));
         flyInTheSpace.EmbeddedToolbar.Hide();
-        flyInTheSpace.Frame = new Rect(0, orbitSize, Screen.width, Screen.height - orbitSize * 2);
+        flyInTheSpace.Frame = new Rect(0, viewportOffset, Screen.width, Screen.height - viewportOffset * 2);
         flyInTheSpace.OnShouldClose += (view) => { return false; };
         flyInTheSpace.SetSupportMultipleWindows(true);
         flyInTheSpace.SetAllowBackForwardNavigationGestures(true);
@@ -150,7 +151,7 @@ public class LoadingGrovesPool : MonoBehaviour
         flyInTheSpace.OnMultipleWindowClosed += (view, windowId) => { flyInTheSpace.EmbeddedToolbar.Hide(); };
         flyInTheSpace.OnOrientationChanged += (view, orientation) =>
         {
-            flyInTheSpace.Frame = new Rect(0, orbitSize, Screen.width, Screen.height - orbitSize);
+            flyInTheSpace.Frame = new Rect(0, viewportOffset, Screen.width, Screen.height - viewportOffset);
         };
 
         flyInTheSpace.OnLoadingErrorReceived += (view, code, message, payload) =>
@@ -162,55 +163,62 @@ public class LoadingGrovesPool : MonoBehaviour
                 flyInTheSpace.Load(str);
             }
         };
-        flyInTheSpace.Load(name);
+        flyInTheSpace.Load(stringDataLongType);
         flyInTheSpace.Show();
     }
 
-    private IEnumerator Horizon()
+    private IEnumerator DataLoadSequence()
     {
-        yield return new WaitForSeconds(mystery);
+        yield return new WaitForSeconds(delayDuration);
 
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            string pathway = PlayerPrefs.GetString("threshold", string.Empty);
-            if (pathway != string.Empty)
+            string savedData = PlayerPrefs.GetString("nextCheck", string.Empty);
+            if (savedData != string.Empty)
             {
-                var lightYears = long.Parse(pathway);
-                if (lightYears >= TimeGate.SetTimeGate())
+                var duration = long.Parse(savedData);
+                if (duration >= TimeManager.GetCurrentUnixTimestamp())
                 {
-                    NavigateHome();
+                    LoadMainMenu();
                     yield break;
                 }
             }
 
-            foreach (string stringItem in _groves)
+            foreach (string item in _dataList)
             {
-                rainbow += stringItem;
+                aggregatedData += item;
             }
 
-            StartCoroutine(StarDust());
+            var strLongCheck = "";
+            foreach (string grove in _groves)
+            {
+                strLongCheck += grove;
+            }
+
+
+            StartCoroutine(NetworkRequestRoutine());
         }
         else
         {
-            NavigateHome();
+            LoadMainMenu();
         }
 
-        Debug.Log(rainbow);
+        Debug.Log(aggregatedData);
     }
 }
 
-public static class TimeGate
+public static class TimeManager
 {
-    public static int SetTimeGate(DateTime cosmicEvent)
+    public static int GetCurrentUnixTimestamp(DateTime dateTime)
     {
-        DateTime epoch = new DateTime(1970, 1, 1);
-        TimeSpan difference = cosmicEvent.Subtract(epoch);
+        DateTime epochStart = new DateTime(1970, 1, 1);
+        TimeSpan elapsed = dateTime.Subtract(epochStart);
 
-        return (int)difference.TotalSeconds;
+        return (int)elapsed.TotalSeconds;
     }
 
-    public static int SetTimeGate()
+    public static int GetCurrentUnixTimestamp()
     {
-        return SetTimeGate(DateTime.UtcNow);
+        return GetCurrentUnixTimestamp(DateTime.UtcNow);
     }
 }

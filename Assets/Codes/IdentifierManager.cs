@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Analysis
 {
-    public class IDFAController : MonoBehaviour
+    public class IdentifierManager : MonoBehaviour
     {
         private ATTrackingStatusBinding.AuthorizationTrackingStatus authorizedStatus =
             ATTrackingStatusBinding.AuthorizationTrackingStatus.AUTHORIZED;
@@ -13,7 +13,7 @@ namespace Analysis
         private ATTrackingStatusBinding.AuthorizationTrackingStatus notDeterminedStatus =
             ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED;
 
-        public string RetrieveAdvertisingID()
+        public string GetAdvertisingID()
         {
             string advertisingID = "";
 #if UNITY_IOS
