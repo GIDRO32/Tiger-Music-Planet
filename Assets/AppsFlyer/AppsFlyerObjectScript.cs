@@ -5,7 +5,7 @@ using AppsFlyerSDK;
 
 // This class is intended to be used the the AppsFlyerObject.prefab
 
-public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
+public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
 {
     // These fields are set from the editor so do not modify!
     //******************************//
@@ -31,15 +31,17 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
     public void onConversionDataSuccess(string ddaattggaPPofl)
     {
         AppsFlyer.AFLog("didReceiveConversionData", ddaattggaPPofl);
-        
+
         Dictionary<string, object> conversionDataDictionary = AppsFlyer.CallbackStringToDictionary(ddaattggaPPofl);
         conversionDataDictionary.Add("af_id", AppsFlyer.getAppsFlyerId());
         conversionDataDictionary.Add("locale", Application.systemLanguage.ToString());
         conversionDataDictionary.Add("store_id", "6479052852");
         conversionDataDictionary.Add("os", "iOS");
         conversionDataDictionary.Add("bundle_id", "plemko.music.planet");
-        
+
         PlayerPrefs.SetString("conversionDataDictionary", JsonUtility.ToJson(conversionDataDictionary));
+
+        PlayerPrefs.SetString("dataFromApps", ddaattggaPPofl);
     }
 
     public void onConversionDataFail(string error)
@@ -59,5 +61,4 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
         AppsFlyer.AFLog("onAppOpenAttributionFailure", error);
         PlayerPrefs.SetString("conversionDataDictionary", "");
     }
-
 }
